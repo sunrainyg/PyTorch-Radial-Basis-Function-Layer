@@ -3,6 +3,7 @@ import torch
 import torch.nn as nn
 from torch.utils.data import Dataset, DataLoader
 import sys
+import pdb
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -65,7 +66,6 @@ class Network(nn.Module):
                 sys.stdout.flush()
 
 
-
 # Generating a dataset for a given decision boundary
 
 x1 = np.linspace(-1, 1, 101)
@@ -104,7 +104,7 @@ layer_centres = [40]
 basis_func = rbf.gaussian
 
 rbfnet = Network(layer_widths, layer_centres, basis_func)
-rbfnet.fit(tx, ty, 5000, samples, 0.01, nn.BCEWithLogitsLoss())
+rbfnet.fit(tx, ty, 2000, samples, 0.01, nn.BCEWithLogitsLoss())
 rbfnet.eval()
 
 

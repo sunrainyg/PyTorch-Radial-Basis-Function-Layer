@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+import pdb
 
 # RBF Layer
 
@@ -42,13 +43,13 @@ class RBF(nn.Module):
         nn.init.constant_(self.log_sigmas, 0)
 
     def forward(self, input):
-        size = (input.size(0), self.out_features, self.in_features)
-        x = input.unsqueeze(1).expand(size)
-        c = self.centres.unsqueeze(0).expand(size)
+        size = (input.size(0), self.out_features, self.in_features) #(200,40,2)
+        x = input.unsqueeze(1).expand(size) #shape: torch.Size([200, 40, 2])
+        c = self.centres.unsqueeze(0).expand(size) #shape: torch.Size([200, 40, 2])
+        
+        # \sqrt(\sum(||x-c||^2)) / e^log_sigma
         distances = (x - c).pow(2).sum(-1).pow(0.5) / torch.exp(self.log_sigmas).unsqueeze(0)
         return self.basis_func(distances)
-
-
 
 # RBFs
 
